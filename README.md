@@ -1,7 +1,7 @@
 # distill-sd
 ![Screenshot from 2023-07-27 15-55-03](https://github.com/segmind/distill-sd/assets/82945616/9624aeac-18c4-4128-8f90-6c31107287d0)
 
-Knowledge-distilled, smaller versions of Stable Diffusion as described in [BK-SDM](https://arxiv.org/abs/2305.15798).<br>
+Knowledge-distilled, smaller versions of Stable Diffusion. Unofficial implementation as described in [BK-SDM](https://arxiv.org/abs/2305.15798).<br>
 These distillation-trained models produce images of similar quality to the full-sized Stable-Diffusion model while being significantly faster and smaller.<br>
 ## Components of this Repository:
 + **[data.py](/data.py)** contains scripts to download data for training. 

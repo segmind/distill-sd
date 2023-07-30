@@ -1,5 +1,6 @@
+
 <div align="center">
-<h1>Segmind-Distill-SD</h1>
+<img src="https://github.com/segmind/distill-sd/assets/82945616/1f4786fa-5cca-4509-b9c4-5d0f89dd16f9" alt="logo" width="400" height="auto" />
 </div>
 
 <div align="center">

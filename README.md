@@ -12,7 +12,7 @@ Knowledge-distilled, smaller versions of Stable Diffusion. Unofficial implementa
 These distillation-trained models produce images of similar quality to the full-sized Stable-Diffusion model while being significantly faster and smaller.<br>
 ## Components of this Repository:
 + **[data.py](/data.py)** contains scripts to download data for training. 
-+ **[trainT2I.py](/trainT2I.py)** trains the U-net using the methods described in the paper. This might need additional configuration depending on what model type you want to train (base/small/tiny),batch size, hyperparameters etc. 
++ **[distill_training.py](/distill_training.py)** trains the U-net using the methods described in the paper. This might need additional configuration depending on what model type you want to train (sd_small/sd_tiny),batch size, hyperparameters etc. 
 The basic training code was sourced from the [Huggingface 🤗 diffusers library](https://github.com/huggingface/diffusers).<br>
 
 ## Training Details:
@@ -42,7 +42,7 @@ from diffusers import DPMSolverMultistepScheduler
 from torch import Generator
 
 
-path = 'segmind/BKSDM-Base-45K' # Path to the appropriate model-type
+path = 'segmind/small-sd' # Path to the appropriate model-type
 # Insert your prompt below.
 prompt = "Faceshot Portrait of pretty young (18-year-old) Caucasian wearing a high neck sweater, (masterpiece, extremely detailed skin, photorealistic, heavy shadow, dramatic and cinematic lighting, key light, fill light), sharp focus, BREAK epicrealism"
 # Insert negative prompt below. We recommend using this negative prompt for best results.
@@ -63,6 +63,11 @@ with torch.inference_mode():
     img = pipe(prompt=prompt,negative_prompt=negative_prompt, width=512, height=512, num_inference_steps=25, guidance_scale = 7, num_images_per_prompt=1, generator = gen).images[0]
     img.save("image.png")
 ```
+## Training the Model:
+Training instructions are similar to those of the diffusers text-to-image finetuning script, apart from some extra parameters:
+```distill_level```: One of "sd_small" or "sd_tiny", depending on which type of model is to be trained.<br>
+```--output_weight```: A floating point number representing the amount the output-level KD loss is to be scaled by.<br>
+```--feature-weight```: A floating point number representing the amount the feautre-level KD loss is to be scaled by.<br>
 
 ## Pretrained checkpoints:
 + The trained "sd-small" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/small-sd)<br>

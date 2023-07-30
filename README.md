@@ -77,6 +77,11 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/port
 ![image](https://github.com/segmind/distill-sd/assets/95531133/84434d4f-06ae-4654-9b94-857210aa16cd)
 
 ## Speed-up comparision in terms of inference latency (it/s):
+
+![Screenshot from 2023-07-30 22-51-16](https://github.com/segmind/distill-sd/assets/82945616/51dd3fb3-b6fa-429c-9861-61c44e45a171)
+
+
+
 ![Screenshot from 2023-07-30 22-27-37](https://github.com/segmind/distill-sd/assets/82945616/88b690d6-8fd2-4951-a469-6e2f6b604187)
 
 

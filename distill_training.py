@@ -447,14 +447,6 @@ def parse_args():
         type=float,
         default=1,
         help=(
-            'The number to weigh the output-level distillation by. '
-        ),
-    )
-    parser.add_argument(
-        "--output_weight",
-        type=float,
-        default=1,
-        help=(
             'The number to weigh the output-level distillation loss by. '
         ),
     )

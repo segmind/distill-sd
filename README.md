@@ -30,7 +30,21 @@ Knowledge Distillation Output Loss (i.e MSE Loss between final output of teacher
 Feature-level Knowledge Distillation Loss (i.e MSE Loss between outputs of each block in the U-net):<br>
 ![image](https://github.com/segmind/distill-sd/assets/95531133/c5673b95-9e3b-482e-b3bc-a40db6929b5d)<br>
 
-![image](https://github.com/segmind/distill-sd/assets/95531133/01ca236a-e616-4049-a043-6a9fdab244bf)
+Normal Stable Diffusion U-net:<br>
+![image](https://github.com/segmind/distill-sd/assets/95531133/fb1274b4-f81d-44b9-bdfa-72da5ccff519)
+
+
+SD_Small U-net:<br>
+![image](https://github.com/segmind/distill-sd/assets/95531133/7b2ac26a-672f-4218-a055-02278642fa50)
+
+SD_Tiny U-net:<br>
+![image](https://github.com/segmind/distill-sd/assets/95531133/0c8cacdd-4267-4373-964e-09820f70e604)
+
+
+
+
+
+
 
 
 
@@ -64,10 +78,34 @@ with torch.inference_mode():
     img.save("image.png")
 ```
 ## Training the Model:
-Training instructions are similar to those of the diffusers text-to-image finetuning script, apart from some extra parameters:
+Training instructions are similar to those of the diffusers text-to-image finetuning script, apart from some extra parameters:<br>
 ```distill_level```: One of "sd_small" or "sd_tiny", depending on which type of model is to be trained.<br>
 ```--output_weight```: A floating point number representing the amount the output-level KD loss is to be scaled by.<br>
 ```--feature-weight```: A floating point number representing the amount the feautre-level KD loss is to be scaled by.<br>
+Also, ```snr_gamma``` has been removed.
+
+An example:<br>
+```python
+export MODEL_NAME="CompVis/stable-diffusion-v1-4"
+export DATASET_NAME="lambdalabs/pokemon-blip-captions"
+
+accelerate launch --mixed_precision="fp16"  train_text_to_image.py \
+  --pretrained_model_name_or_path=$MODEL_NAME \
+  --dataset_name=$DATASET_NAME \
+  --use_ema \
+  --resolution=512 --center_crop --random_flip \
+  --train_batch_size=1 \
+  --gradient_accumulation_steps=4 \
+  --gradient_checkpointing \
+  --max_train_steps=15000 \
+  --distill_level="sd_small"\
+  --output_weight=0.5\
+  --feature_weight=0.5\
+  --learning_rate=1e-05 \
+  --max_grad_norm=1 \
+  --lr_scheduler="constant" --lr_warmup_steps=0 \
+  --output_dir="sd-pokemon-model"
+```
 
 ## Pretrained checkpoints:
 + The trained "sd-small" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/small-sd)<br>

@@ -436,7 +436,7 @@ def parse_args():
     parser.add_argument(
         "--distill_level",
         type=str,
-        default="small",
+        default="sd_small",
         help=(
             'The level to which the U-net ought to be distilled. Should be one of `"sd_small"`'
             '(default), or `"sd_tiny"` '

@@ -1,5 +1,5 @@
 # distill-sd
-![image](https://github.com/segmind/distill-sd/assets/95531133/01ca236a-e616-4049-a043-6a9fdab244bf)
+![Screenshot from 2023-07-27 15-55-03](https://github.com/segmind/distill-sd/assets/82945616/9624aeac-18c4-4128-8f90-6c31107287d0)
 
 Knowledge-distilled, smaller versions of Stable Diffusion as described in [BK-SDM](https://arxiv.org/abs/2305.15798).<br>
 These distillation-trained models produce images of similar quality to the full-sized Stable-Diffusion model while being significantly faster and smaller.<br>
@@ -23,7 +23,7 @@ Knowledge Distillation Output Loss (i.e MSE Loss between final output of teacher
 Feature-level Knowledge Distillation Loss (i.e MSE Loss between outputs of each block in the U-net):<br>
 ![image](https://github.com/segmind/distill-sd/assets/95531133/c5673b95-9e3b-482e-b3bc-a40db6929b5d)<br>
 
-
+![image](https://github.com/segmind/distill-sd/assets/95531133/01ca236a-e616-4049-a043-6a9fdab244bf)
 
 
 

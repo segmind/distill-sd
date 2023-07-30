@@ -137,7 +137,7 @@ class TrainingConfig:
     seed = 647
     report_to = "wandb"
     revision = None
-    distill_level = "base"
+    distill_level = "sd_small" # One of "sd_small" or "sd_tiny"
     resume_from_checkpoint = None
     use_ema = False
     enable_xformers_memory_efficient_attention = True
@@ -165,7 +165,6 @@ class TrainingConfig:
     noise_offset = 0
     input_perturbation = 0
     prediction_type = None
-    snr_gamma = None
     checkpointing_steps = 1000
     checkpoints_total_limit = 1
     non_ema_revision = None
@@ -251,11 +250,13 @@ def main():
     unet = UNet2DConditionModel.from_pretrained(
         config.pretrained_model_name_or_path, subfolder="unet", revision=config.non_ema_revision
     )
-    # unet.to(device=accelerator.device, memory_format=torch.channels_last)
+
+    
     KD_teacher_unet=UNet2DConditionModel.from_pretrained(
         config.pretrained_model_name_or_path, subfolder="unet", revision=config.non_ema_revision
     )
-    # KD_teacher_unet = KD_teacher_unet.to(device=accelerator.device, memory_format=torch.channels_last)
+
+    assert config.distill_level=="sd_small" or config.distill_level=="sd_tiny"
     if config.distill_level:
         prepare_unet(unet, config.distill_level)
         
@@ -589,7 +590,7 @@ def main():
 
     KD_teacher = {}
     KD_student= {}
-
+    num_blocks= 4 if model_type=="sd_small" else 3
     def getActivation(activation,name,residuals_present):
         # the hook signature
         if residuals_present:
@@ -598,18 +599,27 @@ def main():
         else:
             def hook(model, input, output):
                 activation[name] = output
-
         return hook
+        
+    def cast_hook(unet,dicts,model_type,teacher=False):
+        if teacher:
+            for i in range(4):
+                unet.down_blocks[i].register_forward_hook(getActivation(dicts,'d'+str(i),True))
+            unet.mid_block.register_forward_hook(getActivation(dicts,'m',False))
+            for i in range(4):
+                unet.up_blocks[i].register_forward_hook(getActivation(dicts,'u'+str(i),False))
+        else:
+            num_blocks= 4 if model_type=="sd_small" else 3
+            for i in range(num_blocks):
+                unet.down_blocks[i].register_forward_hook(getActivation(dicts,'d'+str(i),True))
+            if model_type=="sd_small"
+                unet.mid_block.register_forward_hook(getActivation(dicts,'m',False))
+            for i in range(num_blocks):
+                unet.up_blocks[i].register_forward_hook(getActivation(dicts,'u'+str(i),False))
+            
     
-    def cast_hook(unet,dicts):
-        for i in range(4):
-            unet.down_blocks[i].register_forward_hook(getActivation(dicts,'d'+str(i),True))
-        unet.mid_block.register_forward_hook(getActivation(dicts,'m',False))
-        for i in range(4):
-            unet.up_blocks[i].register_forward_hook(getActivation(dicts,'u'+str(i),False))
-    
-    cast_hook(unet,KD_student)
-    cast_hook(KD_teacher_unet,KD_teacher)
+    cast_hook(unet,KD_student,config.distill_level,False)
+    cast_hook(KD_teacher_unet,KD_teacher,config.distill_level,True)
 
     
 
@@ -669,31 +679,23 @@ def main():
                 with torch.no_grad():
                     teacher_pred=KD_teacher_unet(noisy_latents, timesteps, encoder_hidden_states).sample
 
-                if config.snr_gamma is None:
-                    loss_features=0
+                loss_features=0
+                if model_type=="sd_small":
                     for i in range(4):
                         loss_features=loss_features+F.mse_loss(KD_teacher['d'+str(i)],KD_student['d'+str(i)])
                     loss_features=loss_features+F.mse_loss(KD_teacher['m'],KD_student['m'])
                     for i in range(4):
                         loss_features=loss_features+F.mse_loss(KD_teacher['u'+str(i)],KD_student['u'+str(i)])
-                    loss_KD=F.mse_loss(model_pred.float(), teacher_pred.float(), reduction="mean")
-                    loss_task = F.mse_loss(model_pred.float(), target.float(), reduction="mean")
-                    loss=loss_task+config.output_weight*loss_KD+config.feature_weight*loss_features
-
                 else:
-                    # Compute loss-weights as per Section 3.4 of https://arxiv.org/abs/2303.09556.
-                    # Since we predict the noise instead of x_0, the original formulation is slightly changed.
-                    # This is discussed in Section 4.2 of the same paper.
-                    snr = compute_snr(timesteps)
-                    mse_loss_weights = (
-                        torch.stack([snr, config.snr_gamma * torch.ones_like(timesteps)], dim=1).min(dim=1)[0] / snr
-                    )
-                    # We first calculate the original loss. Then we mean over the non-batch dimensions and
-                    # rebalance the sample-wise losses with their respective loss weights.
-                    # Finally, we take the mean of the rebalanced loss.
-                    loss = F.mse_loss(model_pred.float(), teacher_pred.float(), reduction="none")
-                    loss = loss.mean(dim=list(range(1, len(loss.shape)))) * mse_loss_weights
-                    loss = loss.mean()
+                    for i in range(2):
+                        loss_features=loss_features+F.mse_loss(KD_teacher['d'+str(i)],KD_student['d'+str(i)])
+                    loss_features=loss_features+F.mse_loss(KD_teacher['u'+str(0)],KD_student['d'+str(2)])
+                    for i in range(3):
+                        loss_features=loss_features+F.mse_loss(KD_teacher['u'+str(i+1)],KD_student['u'+str(i)])
+                    
+                loss_KD=F.mse_loss(model_pred.float(), teacher_pred.float(), reduction="mean")
+                loss_task = F.mse_loss(model_pred.float(), target.float(), reduction="mean")
+                loss=loss_task+config.output_weight*loss_KD+config.feature_weight*loss_features
 
                 # Gather the losses across all processes for logging (if we use distributed training).
                 avg_loss = accelerator.gather(loss.repeat(config.train_batch_size)).mean()

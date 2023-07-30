@@ -4,7 +4,6 @@
 Knowledge-distilled, smaller versions of Stable Diffusion as described in [BK-SDM](https://arxiv.org/abs/2305.15798).<br>
 These distillation-trained models produce images of similar quality to the full-sized Stable-Diffusion model while being significantly faster and smaller.<br>
 ## Components of this Repository:
-+ The **[BKSDM directory](/BKSDM)** contains a function to configure the U-net and remove the appropriate blocks prior to distillation training.
 + **[data.py](/data.py)** contains scripts to download data for training. 
 + **[trainT2I.py](/trainT2I.py)** trains the U-net using the methods described in the paper. This might need additional configuration depending on what model type you want to train (base/small/tiny),batch size, hyperparameters etc. 
 The basic training code was sourced from the [Huggingface 🤗 diffusers library](https://github.com/huggingface/diffusers).<br>
@@ -14,7 +13,7 @@ Knowledge-Distillation training a neural network is akin to a teacher guiding a 
 For the Knowledge-Distillation training, we used [SG161222/Realistic_Vision_V4.0's](SG161222/Realistic_Vision_V4.0) U-net  as the teacher model with a subset of [recastai/LAION-art-EN-improved-captions](https://huggingface.co/datasets/recastai/LAION-art-EN-improved-captions) as training data.<br> 
 
 
-As described in the paper, the final training loss is the sum of the MSE loss between the noise predicted by the teacher U-net and the noise predicted by the student U-net, the MSE Loss between the actual added noise and the predicted noise, and the sum of MSE Losses between the predictions of the teacher and student U-nets after every block.<br>
+The final training loss is the sum of the MSE loss between the noise predicted by the teacher U-net and the noise predicted by the student U-net, the MSE Loss between the actual added noise and the predicted noise, and the sum of MSE Losses between the predictions of the teacher and student U-nets after every block.<br>
 Total Loss:<br>
 ![image](https://github.com/segmind/distill-sd/assets/95531133/bf4751cd-99b3-46a9-93e4-d2b4237a9c53)<br>
 Task Loss (i.e MSE Loss between added noise and actual noise):<br>
@@ -23,7 +22,6 @@ Knowledge Distillation Output Loss (i.e MSE Loss between final output of teacher
 ![image](https://github.com/segmind/distill-sd/assets/95531133/1b986995-51e6-4c36-bad3-6ca4b719cfd1)<br>
 Feature-level Knowledge Distillation Loss (i.e MSE Loss between outputs of each block in the U-net):<br>
 ![image](https://github.com/segmind/distill-sd/assets/95531133/c5673b95-9e3b-482e-b3bc-a40db6929b5d)<br>
-These equations were sourced from the paper.
 
 
 
@@ -60,10 +58,12 @@ with torch.inference_mode():
 ```
 
 ## Pretrained checkpoints:
-**The trained "base" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/BKSDM-Base-45K).**<br>
+**The trained "sd-small" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/BKSDM-Base-45K).**<br>
 **Other versions of the model will be made public soon.**<br>
 ## Here are some generated examples:
-![image](https://github.com/segmind/distill-sd/assets/95531133/8062a175-a042-4a07-9dd7-e35de125f951)
+
+![image](https://github.com/segmind/distill-sd/assets/95531133/84434d4f-06ae-4654-9b94-857210aa16cd)
+
 
 ## Citation
 

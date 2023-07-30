@@ -4,8 +4,9 @@
 </div>
 
 <div align="center">
-<img src="https://github.com/segmind/distill-sd/assets/82945616/9624aeac-18c4-4128-8f90-6c31107287d0" alt="logo" width="450" height="auto" />
+<img src="https://github.com/segmind/distill-sd/assets/82945616/8daf90b0-f46d-4cb4-965b-7d443461c4f9" width="950" height="auto" />
 </div>
+
 
 Knowledge-distilled, smaller versions of Stable Diffusion. Unofficial implementation as described in [BK-SDM](https://arxiv.org/abs/2305.15798).<br>
 These distillation-trained models produce images of similar quality to the full-sized Stable-Diffusion model while being significantly faster and smaller.<br>

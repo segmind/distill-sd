@@ -1,14 +1,34 @@
 # distill-sd
 ![image](https://github.com/segmind/distill-sd/assets/95531133/01ca236a-e616-4049-a043-6a9fdab244bf)
 
-An unofficial implementation of [BK-SDM](https://arxiv.org/abs/2305.15798).<br>
-This distillation-trained model produces images of similar quality to the full-sized Stable-Diffusion model while being significantly faster and smaller.<br>
+Knowledge-distilled, smaller versions of Stable Diffusion as described in [BK-SDM](https://arxiv.org/abs/2305.15798).<br>
+These distillation-trained models produce images of similar quality to the full-sized Stable-Diffusion model while being significantly faster and smaller.<br>
 ## Components of this Repository:
 + The **[BKSDM directory](/BKSDM)** contains a function to configure the U-net and remove the appropriate blocks prior to distillation training.
-This code was taken from [this repo](https://github.com/Gothos/BK-SDM).<br>
-+ **[data.py](/data.py)** contains scripts to download data for training. We distillation-train the U-net with [SG161222/Realistic_Vision_V4.0](SG161222/Realistic_Vision_V4.0)  as the teacher model on a subset of [recastai/LAION-art-EN-improved-captions](https://huggingface.co/datasets/recastai/LAION-art-EN-improved-captions).<br> 
++ **[data.py](/data.py)** contains scripts to download data for training. 
 + **[trainT2I.py](/trainT2I.py)** trains the U-net using the methods described in the paper. This might need additional configuration depending on what model type you want to train (base/small/tiny),batch size, hyperparameters etc. 
 The basic training code was sourced from the [Huggingface 🤗 diffusers library](https://github.com/huggingface/diffusers).<br>
+
+## Training Details:
+Knowledge-Distillation training a neural network is akin to a teacher guiding a student step-by-step (a somewhat loose example). A large teacher model is trained on large amounts of data and then a smaller model is trained on a smaller dataset, with the objective of aping the outputs of the larger model along with classical training on the dataset.<br>
+For the Knowledge-Distillation training, we used [SG161222/Realistic_Vision_V4.0's](SG161222/Realistic_Vision_V4.0) U-net  as the teacher model with a subset of [recastai/LAION-art-EN-improved-captions](https://huggingface.co/datasets/recastai/LAION-art-EN-improved-captions) as training data.<br> 
+
+
+As described in the paper, the final training loss is the sum of the MSE loss between the noise predicted by the teacher U-net and the noise predicted by the student U-net, the MSE Loss between the actual added noise and the predicted noise, and the sum of MSE Losses between the predictions of the teacher and student U-nets after every block.<br>
+Total Loss:<br>
+![image](https://github.com/segmind/distill-sd/assets/95531133/bf4751cd-99b3-46a9-93e4-d2b4237a9c53)<br>
+Task Loss (i.e MSE Loss between added noise and actual noise):<br>
+![image](https://github.com/segmind/distill-sd/assets/95531133/86f1d716-97f4-42ad-9e5f-24b091b311eb)<br>
+Knowledge Distillation Output Loss (i.e MSE Loss between final output of teacher U-net and student U-net):<br>
+![image](https://github.com/segmind/distill-sd/assets/95531133/1b986995-51e6-4c36-bad3-6ca4b719cfd1)<br>
+Feature-level Knowledge Distillation Loss (i.e MSE Loss between outputs of each block in the U-net):<br>
+![image](https://github.com/segmind/distill-sd/assets/95531133/c5673b95-9e3b-482e-b3bc-a40db6929b5d)<br>
+These equations were sourced from the paper.
+
+
+
+
+
 ## Usage 
 ```python
 import torch

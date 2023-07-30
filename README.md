@@ -79,14 +79,14 @@ with torch.inference_mode():
 ```
 ## Training the Model:
 Training instructions are similar to those of the diffusers text-to-image finetuning script, apart from some extra parameters:<br>
-```distill_level```: One of "sd_small" or "sd_tiny", depending on which type of model is to be trained.<br>
+```--distill_level```: One of "sd_small" or "sd_tiny", depending on which type of model is to be trained.<br>
 ```--output_weight```: A floating point number representing the amount the output-level KD loss is to be scaled by.<br>
 ```--feature-weight```: A floating point number representing the amount the feautre-level KD loss is to be scaled by.<br>
 Also, ```snr_gamma``` has been removed.
 
 An example:<br>
 ```python
-export MODEL_NAME="CompVis/stable-diffusion-v1-4"
+export MODEL_NAME="SG161222/Realistic_Vision_V4.0"
 export DATASET_NAME="lambdalabs/pokemon-blip-captions"
 
 accelerate launch --mixed_precision="fp16"  train_text_to_image.py \

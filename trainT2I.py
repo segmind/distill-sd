@@ -624,7 +624,8 @@ def main():
 
     KD_teacher = {}
     KD_student= {}
-    num_blocks= 4 if model_type=="sd_small" else 3
+
+    
     def getActivation(activation,name,residuals_present):
         # the hook signature
         if residuals_present:
@@ -714,7 +715,7 @@ def main():
                     teacher_pred=KD_teacher_unet(noisy_latents, timesteps, encoder_hidden_states).sample
 
                 loss_features=0
-                if model_type=="sd_small":
+                if configs.distill_level=="sd_small":
                     for i in range(4):
                         loss_features=loss_features+F.mse_loss(KD_teacher['d'+str(i)],KD_student['d'+str(i)])
                     loss_features=loss_features+F.mse_loss(KD_teacher['m'],KD_student['m'])

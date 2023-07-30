@@ -58,9 +58,9 @@ with torch.inference_mode():
 ```
 
 ## Pretrained checkpoints:
-+ The trained "sd-small" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/small-sd).**<br>
-+ The trained "sd-tiny" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/tiny-sd).**<br>
-+ Fine-tuned version of the "sd-tiny model" on portrait images is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/portrait-finetuned).**<br>
++ The trained "sd-small" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/small-sd)<br>
++ The trained "sd-tiny" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/tiny-sd)<br>
++ Fine-tuned version of the "sd-tiny model" on portrait images is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/portrait-finetuned)<br>
 ## Here are some generated examples:
 
 ![image](https://github.com/segmind/distill-sd/assets/95531133/84434d4f-06ae-4654-9b94-857210aa16cd)

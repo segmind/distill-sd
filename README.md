@@ -4,7 +4,7 @@
 </div>
 
 <div align="center">
-<h2>Smaller, Faster Stable Diffusion 🚀 </h2>
+<h2> 50% Smaller, Faster Stable Diffusion 🚀 </h2>
 </div>
 
 <div align="center">

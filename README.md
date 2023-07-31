@@ -22,13 +22,13 @@ For the Knowledge-Distillation training, we used [SG161222/Realistic_Vision_V4.0
 
 The final training loss is the sum of the MSE loss between the noise predicted by the teacher U-net and the noise predicted by the student U-net, the MSE Loss between the actual added noise and the predicted noise, and the sum of MSE Losses between the predictions of the teacher and student U-nets after every block.<br>
 Total Loss:<br>
-![image](https://github.com/segmind/distill-sd/assets/95531133/bf4751cd-99b3-46a9-93e4-d2b4237a9c53)<br>
+![image](assets/eq1.png)<br>
 Task Loss (i.e MSE Loss between added noise and actual noise):<br>
-![image](https://github.com/segmind/distill-sd/assets/95531133/86f1d716-97f4-42ad-9e5f-24b091b311eb)<br>
+![image](assets/eq2.png)<br>
 Knowledge Distillation Output Loss (i.e MSE Loss between final output of teacher U-net and student U-net):<br>
-![image](https://github.com/segmind/distill-sd/assets/95531133/1b986995-51e6-4c36-bad3-6ca4b719cfd1)<br>
+![image](assets/eq3.png)<br>
 Feature-level Knowledge Distillation Loss (i.e MSE Loss between outputs of each block in the U-net):<br>
-![image](https://github.com/segmind/distill-sd/assets/95531133/c5673b95-9e3b-482e-b3bc-a40db6929b5d)<br>
+![image](assets/eq4.png)<br>
 
 Here are the settings we used for training:<br>
 ```python
@@ -42,15 +42,15 @@ feature_weight = 0.5 # Lambda Feat in the final loss equation
 ## Parameters:
 
 Normal Stable Diffusion U-net:<br>
-![image](https://github.com/segmind/distill-sd/assets/95531133/fb1274b4-f81d-44b9-bdfa-72da5ccff519)
+![image](assets/base.png)
 Number of parameters: 859,520,964<br>
 
 SD_Small U-net:<br>
-![image](https://github.com/segmind/distill-sd/assets/95531133/7b2ac26a-672f-4218-a055-02278642fa50)<br>
+![image](assets/small.png)<br>
 Number of parameters: 579,384,964<br>
 
 SD_Tiny U-net:<br>
-![image](https://github.com/segmind/distill-sd/assets/95531133/0c8cacdd-4267-4373-964e-09820f70e604)<br>
+![image](assets/tiny.png)<br>
 Number of parameters: 323,384,964<br>
 
 (Model parameters reported using torchinfo)
@@ -171,7 +171,7 @@ Below are some of the images generated with the sd-tiny model, fine-tuned on por
 
 Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/portrait-finetuned)
 
-![Screenshot from 2023-07-31 09-23-02](https://github.com/segmind/distill-sd/assets/82945616/32412b6a-5349-464e-a0b2-184657296f14)
+![grid_2](assets/grid_2.png)
 
 ### SD-tiny model LoRA trained on abstract images
 
@@ -179,18 +179,17 @@ Below are some of the images generated with the LoRA trained sd-tiny model, on a
 
 Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/tiny_lora_mxtun3_style)
 
-![Screenshot from 2023-07-31 17-54-40](https://github.com/segmind/distill-sd/assets/82945616/46bf20e9-9b81-471b-b3f6-e3ad16d1fdd6)
+![grid_3](assets/grid_3.png)
 
 
 
 ## Speed comparision of inference on NVIDIA A100 80GB:
 
-![Screenshot from 2023-07-30 22-51-16](https://github.com/segmind/distill-sd/assets/82945616/51dd3fb3-b6fa-429c-9861-61c44e45a171)
+![grid_2](assets/graph.png)
 
 
 
-![Screenshot from 2023-07-30 22-27-37](https://github.com/segmind/distill-sd/assets/82945616/88b690d6-8fd2-4951-a469-6e2f6b604187)
-
+![grid_2](assets/comparision.png)
 
 ## Advantages
 + Upto 100% Faster inferences

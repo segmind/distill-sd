@@ -204,6 +204,7 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/tiny
 ## Research Roadmap
 - [ ] SDXL distilled models and code.
 - [ ] Further fine-tuned SD-1.5 base models for better composibility and generalization.
+- [ ] Apply Flash Attention-2 for faster training/fine-tuning
 - [ ] Apply TensorRT and/or AITemplate for further accelerations.
 - [ ] Look at Quantization-Aware-Training(QAT) during distillation process.
 

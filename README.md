@@ -198,6 +198,11 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/port
 - [ ] Apply TensorRT and/or AITemplate for further accelerations.
 - [ ] Look at Quantization-Aware-Training(QAT) during distillation process.
 
+## Aknowledgements:
+
++ This work would not have been possible without Nota AI's [paper](https://arxiv.org/pdf/2305.15798.pdf) on compression models. We express our gratitude for their research work in this area.
+
+
 ## Citation
 
 ```bibtex

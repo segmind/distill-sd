@@ -129,6 +129,11 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/port
 ![Screenshot from 2023-07-30 22-27-37](https://github.com/segmind/distill-sd/assets/82945616/88b690d6-8fd2-4951-a469-6e2f6b604187)
 
 
+## Advantages
++ Upto 100% Faster inferences
++ Upto 30% lower VRAM footprint
++ Faster dreambooth and LoRA training
+
 ## Limitations
 + The distilled models are in early phase and the outputs may not be at a production quality yet.
 + 

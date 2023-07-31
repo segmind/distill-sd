@@ -203,9 +203,9 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/port
 + This work would not have been possible without Nota AI's [paper](https://arxiv.org/pdf/2305.15798.pdf) on compression models. We express our gratitude for their research work in this area.
 
 ## Contributors:
-+ @Warlord-K
-+ @harishsegmind
-+ @Gothos
++ [@Warlord-K](https://github.com/Warlord-K)
++ [@harishsegmind](https://github.com/harishsegmind)
++ [@Gothos](https://github.com/Gothos)
   
 
 

@@ -4,6 +4,10 @@
 </div>
 
 <div align="center">
+<h2>Smaller, Faster Stable Diffusion 🚀 </h2>
+</div>
+
+<div align="center">
 <img src="assets/main.png" width="950" height="auto" />
 </div>
 

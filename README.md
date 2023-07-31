@@ -89,7 +89,7 @@ An example:<br>
 export MODEL_NAME="SG161222/Realistic_Vision_V4.0"
 export DATASET_NAME="lambdalabs/pokemon-blip-captions"
 
-accelerate launch --mixed_precision="fp16"  train_text_to_image.py \
+accelerate launch --mixed_precision="fp16"  distill_training.py \
   --pretrained_model_name_or_path=$MODEL_NAME \
   --dataset_name=$DATASET_NAME \
   --use_ema \

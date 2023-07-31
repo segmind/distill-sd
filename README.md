@@ -14,11 +14,11 @@ These distillation-trained models produce images of similar quality to the full-
 + **[data.py](/data.py)** contains scripts to download data for training. 
 + **[distill_training.py](/distill_training.py)** trains the U-net using the methods described in the paper. This might need additional configuration depending on what model type you want to train (sd_small/sd_tiny),batch size, hyperparameters etc. 
 The basic training code was sourced from the [Huggingface 🤗 diffusers library](https://github.com/huggingface/diffusers).<br>
+LoRA Training and Training from checkpoints can be done by simply using the standard diffusers scripts.
 
 ## Training Details:
 Knowledge-Distillation training a neural network is akin to a teacher guiding a student step-by-step (a somewhat loose example). A large teacher model is trained on large amounts of data and then a smaller model is trained on a smaller dataset, with the objective of aping the outputs of the larger model along with classical training on the dataset.<br>
 For the Knowledge-Distillation training, we used [SG161222/Realistic_Vision_V4.0's](SG161222/Realistic_Vision_V4.0) U-net  as the teacher model with a subset of [recastai/LAION-art-EN-improved-captions](https://huggingface.co/datasets/recastai/LAION-art-EN-improved-captions) as training data.<br> 
-
 
 The final training loss is the sum of the MSE loss between the noise predicted by the teacher U-net and the noise predicted by the student U-net, the MSE Loss between the actual added noise and the predicted noise, and the sum of MSE Losses between the predictions of the teacher and student U-nets after every block.<br>
 Total Loss:<br>
@@ -29,6 +29,17 @@ Knowledge Distillation Output Loss (i.e MSE Loss between final output of teacher
 ![image](https://github.com/segmind/distill-sd/assets/95531133/1b986995-51e6-4c36-bad3-6ca4b719cfd1)<br>
 Feature-level Knowledge Distillation Loss (i.e MSE Loss between outputs of each block in the U-net):<br>
 ![image](https://github.com/segmind/distill-sd/assets/95531133/c5673b95-9e3b-482e-b3bc-a40db6929b5d)<br>
+
+Here are the settings we used for training:<br>
+```python
+lr = 1e-5
+scheduler = "cosine"
+batch_size = 32
+output_weight = 0.5 # Lambda Out in the final loss equation
+feature_weight = 0.5 # Lambda Feat in the final loss equation
+```
+
+## Parameters:
 
 Normal Stable Diffusion U-net:<br>
 ![image](https://github.com/segmind/distill-sd/assets/95531133/fb1274b4-f81d-44b9-bdfa-72da5ccff519)
@@ -77,11 +88,12 @@ with torch.inference_mode():
     img.save("image.png")
 ```
 ## Training the Model:
-Training instructions are similar to those of the diffusers text-to-image finetuning script, apart from some extra parameters:<br>
+Training instructions for knowledge distillation are similar to those of the diffusers text-to-image finetuning script, apart from some extra parameters:<br>
 ```--distill_level```: One of "sd_small" or "sd_tiny", depending on which type of model is to be trained.<br>
 ```--output_weight```: A floating point number representing the amount the output-level KD loss is to be scaled by.<br>
 ```--feature-weight```: A floating point number representing the amount the feautre-level KD loss is to be scaled by.<br>
 Also, ```snr_gamma``` has been removed.
+We suggest using a standard Stable Diffusion model to distillation train, since the script has been configured for those architectures.
 
 An example:<br>
 ```python
@@ -105,6 +117,48 @@ accelerate launch --mixed_precision="fp16"  distill_training.py \
   --lr_scheduler="constant" --lr_warmup_steps=0 \
   --output_dir="sd-laion-art"
 ```
+
+To train from the huggingface checkpoints, use the checkpoint_training script and just replace MODEL_NAME with "segmind/small-sd" or "segmind/tiny-sd", like so:<br>
+```python
+export MODEL_NAME="segmind/small-sd"
+export DATASET_NAME="fantasyfish/laion-art"
+
+accelerate launch --mixed_precision="fp16"  checkpoint_training.py \
+  --pretrained_model_name_or_path=$MODEL_NAME \
+  --dataset_name=$DATASET_NAME \
+  --use_ema \
+  --resolution=512 --center_crop --random_flip \
+  --train_batch_size=1 \
+  --gradient_accumulation_steps=4 \
+  --gradient_checkpointing \
+  --max_train_steps=15000 \
+  --learning_rate=1e-05 \
+  --max_grad_norm=1 \
+  --lr_scheduler="constant" --lr_warmup_steps=0 \
+  --output_dir="sd-laion-art"
+```
+To LoRA-train:<br>
+```python
+export MODEL_NAME="segmind/small-sd"
+export DATASET_NAME="fantasyfish/laion-art"
+
+accelerate launch --mixed_precision="fp16" lora_training.py \
+  --pretrained_model_name_or_path=$MODEL_NAME \
+  --dataset_name=$DATASET_NAME --caption_column="text" \
+  --resolution=512 --random_flip \
+  --train_batch_size=1 \
+  --num_train_epochs=100 --checkpointing_steps=5000 \
+  --learning_rate=1e-04 --lr_scheduler="constant" --lr_warmup_steps=0 \
+  --seed=42 \
+  --output_dir="fantasyfish/laion-art" \
+  --validation_prompt="cute dragon creature" --report_to="wandb"
+  --use_peft \
+  --lora_r=4 --lora_alpha=32 \
+  --lora_text_encoder_r=4 --lora_text_encoder_alpha=32
+```
+
+
+The latter two scripts are taken from the [🤗 diffusers github](https://github.com/huggingface/diffusers).
 
 ## Pretrained checkpoints:
 + The trained "sd-small" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/small-sd)<br>

@@ -151,7 +151,7 @@ accelerate launch --mixed_precision="fp16" lora_training.py \
   --learning_rate=1e-04 --lr_scheduler="constant" --lr_warmup_steps=0 \
   --seed=42 \
   --output_dir="fantasyfish/laion-art" \
-  --validation_prompt="cute dragon creature" --report_to="wandb"
+  --validation_prompt="A man in a suit" --report_to="wandb"
   --use_peft \
   --lora_r=4 --lora_alpha=32 \
   --lora_text_encoder_r=4 --lora_text_encoder_alpha=32

@@ -60,7 +60,7 @@ check_min_version("0.20.0.dev0")
 logger = get_logger(__name__, log_level="INFO")
 
 DATASET_NAME_MAPPING = {
-    "lambdalabs/pokemon-blip-captions": ("image", "text"),
+    "fantasyfish/laion-art": ("image", "text"),
 }
 
 

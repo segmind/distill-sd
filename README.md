@@ -118,7 +118,7 @@ Below are some of the images generated with the sd-tiny model, fine-tuned on por
 
 Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/portrait-finetuned)
 
-![image](https://github.com/segmind/distill-sd/assets/95531133/84434d4f-06ae-4654-9b94-857210aa16cd)
+![Screenshot from 2023-07-31 09-23-02](https://github.com/segmind/distill-sd/assets/82945616/32412b6a-5349-464e-a0b2-184657296f14)
 
 ## Speed comparision of inference on NVIDIA A100 80GB:
 

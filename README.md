@@ -1,10 +1,10 @@
 
 <div align="center">
-<img src="https://github.com/segmind/distill-sd/assets/82945616/1f4786fa-5cca-4509-b9c4-5d0f89dd16f9" alt="logo" width="400" height="auto" />
+<img src="assets/logo.png" alt="logo" width="400" height="auto" />
 </div>
 
 <div align="center">
-<img src="https://github.com/segmind/distill-sd/assets/82945616/8daf90b0-f46d-4cb4-965b-7d443461c4f9" width="950" height="auto" />
+<img src="assets/main.png" width="950" height="auto" />
 </div>
 
 

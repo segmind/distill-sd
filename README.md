@@ -185,11 +185,11 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/tiny
 
 ## Speed comparision of inference on NVIDIA A100 80GB:
 
-![grid_2](assets/graph.png)
+![graph](assets/graph.png)
 
 
 
-![grid_2](assets/comparision.png)
+![compare](assets/comparision1.png)
 
 ## Advantages
 + Upto 100% Faster inferences

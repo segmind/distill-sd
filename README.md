@@ -172,6 +172,13 @@ The latter two scripts are taken from the [🤗 diffusers github](https://github
 ### SD-tiny model fine-tuned on portrait images
 
 Below are some of the images generated with the sd-tiny model, fine-tuned on portrait images.
+```
+Closeup portrait photo of a 28-year-old man, wearing a rugged leather jacket, with a five o'clock shadow and prominent laugh lines around his eyes, captured in soft, golden hour lighting.
+RAW photo, (closeup:1.2), portrait of a 35-year-old woman, wearing minimal makeup, showcasing her freckles, with a serene expression in a lush botanical garden, illuminated by gentle dappled sunlight.
+High-quality, face portrait photo of a 40-year-old European man, wearing glasses, revealing the fine lines and character on his forehead, while his salt-and-pepper beard adds a touch of sophistication, with a subtle hint of sunlight peeking through dense foliage.
+B&W photo of a 48-year-old woman, shot from the side, highlighting her elegant profile and the delicate lines etched across her cheeks, capturing her in a serene moment on a windy, overcast beach.
+High-quality, closeup portrait photo of a 30-year-old Asian woman, wearing traditional clothing, emphasizing the flawless porcelain-like texture of her skin, with intricate details of her traditional headpiece.
+```
 
 Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/portrait-finetuned)
 

@@ -173,6 +173,16 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/port
 
 ![Screenshot from 2023-07-31 09-23-02](https://github.com/segmind/distill-sd/assets/82945616/32412b6a-5349-464e-a0b2-184657296f14)
 
+### SD-tiny model LoRA trained on abstract images
+
+Below are some of the images generated with the LoRA trained sd-tiny model, on abstract concepts0.
+
+Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/tiny_lora_mxtun3_style)
+
+![Screenshot from 2023-07-31 17-54-40](https://github.com/segmind/distill-sd/assets/82945616/46bf20e9-9b81-471b-b3f6-e3ad16d1fdd6)
+
+
+
 ## Speed comparision of inference on NVIDIA A100 80GB:
 
 ![Screenshot from 2023-07-30 22-51-16](https://github.com/segmind/distill-sd/assets/82945616/51dd3fb3-b6fa-429c-9861-61c44e45a171)

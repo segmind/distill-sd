@@ -32,18 +32,17 @@ Feature-level Knowledge Distillation Loss (i.e MSE Loss between outputs of each 
 
 Normal Stable Diffusion U-net:<br>
 ![image](https://github.com/segmind/distill-sd/assets/95531133/fb1274b4-f81d-44b9-bdfa-72da5ccff519)
-
+Number of parameters: 859,520,964<br>
 
 SD_Small U-net:<br>
-![image](https://github.com/segmind/distill-sd/assets/95531133/7b2ac26a-672f-4218-a055-02278642fa50)
+![image](https://github.com/segmind/distill-sd/assets/95531133/7b2ac26a-672f-4218-a055-02278642fa50)<br>
+Number of parameters: 579,384,964<br>
 
 SD_Tiny U-net:<br>
-![image](https://github.com/segmind/distill-sd/assets/95531133/0c8cacdd-4267-4373-964e-09820f70e604)
+![image](https://github.com/segmind/distill-sd/assets/95531133/0c8cacdd-4267-4373-964e-09820f70e604)<br>
+Number of parameters: 323,384,964<br>
 
-
-
-
-
+(Model parameters reported using torchinfo)
 
 
 
@@ -87,7 +86,7 @@ Also, ```snr_gamma``` has been removed.
 An example:<br>
 ```python
 export MODEL_NAME="SG161222/Realistic_Vision_V4.0"
-export DATASET_NAME="lambdalabs/pokemon-blip-captions"
+export DATASET_NAME="fantasyfish/laion-art"
 
 accelerate launch --mixed_precision="fp16"  distill_training.py \
   --pretrained_model_name_or_path=$MODEL_NAME \
@@ -104,7 +103,7 @@ accelerate launch --mixed_precision="fp16"  distill_training.py \
   --learning_rate=1e-05 \
   --max_grad_norm=1 \
   --lr_scheduler="constant" --lr_warmup_steps=0 \
-  --output_dir="sd-pokemon-model"
+  --output_dir="sd-laion-art"
 ```
 
 ## Pretrained checkpoints:

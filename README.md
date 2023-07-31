@@ -140,10 +140,10 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/port
 + Distilled models are not very good at composibility or multiconcepts yet.
 
 ## Research Roadmap
-[] SDXL distilled models and code.
-[] Further fine-tuned SD-1.5 base models for better composibility and generalization.
-[] Apply TensorRT and/or AITemplate for further accelerations.
-[] Look at Quantization-Aware-Training(QAT) during distillation process.
+- [ ] SDXL distilled models and code.
+- [ ] Further fine-tuned SD-1.5 base models for better composibility and generalization.
+- [ ] Apply TensorRT and/or AITemplate for further accelerations.
+- [ ] Look at Quantization-Aware-Training(QAT) during distillation process.
 
 ## Citation
 

@@ -226,7 +226,7 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/tiny
 
 ## Contributors:
 <a href="https://github.com/segmind/distill-sd/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=segmind/distill-sd" />
+  <img src="https://contrib.rocks/image?repo=segmind/distill-sd"/>
 </a>
 
 Made with [contrib.rocks](https://contrib.rocks).

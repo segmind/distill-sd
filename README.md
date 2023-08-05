@@ -17,7 +17,7 @@ These distillation-trained models produce images of similar quality to the full-
 ## Components of this Repository:
 + **[data.py](/data.py)** contains scripts to download data for training. 
 + **[distill_training.py](/distill_training.py)** trains the U-net using the methods described in the paper. This might need additional configuration depending on what model type you want to train (sd_small/sd_tiny),batch size, hyperparameters etc. 
-The basic training code was sourced from the [Huggingface 🤗 diffusers library](https://github.com/huggingface/diffusers).<br>
+The basic training code was sourced from the [Hugging Face 🤗 diffusers library](https://github.com/huggingface/diffusers).<br>
 LoRA Training and Training from checkpoints can be done by simply using the standard diffusers scripts.
 
 ## Training Details:
@@ -122,7 +122,7 @@ accelerate launch --mixed_precision="fp16"  distill_training.py \
   --output_dir="sd-laion-art"
 ```
 
-To train from the huggingface checkpoints, use the checkpoint_training script and just replace MODEL_NAME with "segmind/small-sd" or "segmind/tiny-sd", like so:<br>
+To train from the Hugging Face checkpoints, use the checkpoint_training script and just replace MODEL_NAME with "segmind/small-sd" or "segmind/tiny-sd", like so:<br>
 ```python
 export MODEL_NAME="segmind/small-sd"
 export DATASET_NAME="fantasyfish/laion-art"
@@ -165,9 +165,9 @@ accelerate launch --mixed_precision="fp16" lora_training.py \
 The latter two scripts are taken from the [🤗 diffusers github](https://github.com/huggingface/diffusers).
 
 ## Pretrained checkpoints:
-+ The trained "sd-small" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/small-sd)<br>
-+ The trained "sd-tiny" version of the model is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/tiny-sd)<br>
-+ Fine-tuned version of the "sd-tiny model" on portrait images is available at [this Huggingface 🤗 repo](https://huggingface.co/segmind/portrait-finetuned)<br>
++ The trained "sd-small" version of the model is available at [this Hugging Face 🤗 repo](https://huggingface.co/segmind/small-sd)<br>
++ The trained "sd-tiny" version of the model is available at [this Hugging Face 🤗 repo](https://huggingface.co/segmind/tiny-sd)<br>
++ Fine-tuned version of the "sd-tiny model" on portrait images is available at [this Hugging Face 🤗 repo](https://huggingface.co/segmind/portrait-finetuned)<br>
 ## Here are some generated examples:
 ### SD-tiny model fine-tuned on portrait images
 
@@ -180,7 +180,7 @@ B&W photo of a 48-year-old woman, shot from the side, highlighting her elegant p
 High-quality, closeup portrait photo of a 30-year-old Asian woman, wearing traditional clothing, emphasizing the flawless porcelain-like texture of her skin, with intricate details of her traditional headpiece.
 ```
 
-Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/portrait-finetuned)
+Link to the model -> [Hugging Face 🤗 repo](https://huggingface.co/segmind/portrait-finetuned)
 
 ![grid_2](assets/grid_2.png)
 
@@ -188,7 +188,7 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/port
 
 Below are some of the images generated with the LoRA trained sd-tiny model, on abstract concepts0.
 
-Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/tiny_lora_mxtun3_style)
+Link to the model -> [Hugging Face 🤗 repo](https://huggingface.co/segmind/tiny_lora_mxtun3_style)
 
 ![grid_3](assets/grid_3.png)
 

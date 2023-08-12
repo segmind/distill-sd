@@ -121,8 +121,8 @@ accelerate launch --mixed_precision="fp16"  distill_training.py \
   --lr_scheduler="constant" --lr_warmup_steps=0 \
   --output_dir="sd-laion-art"
 ```
-<br>
-Notice: While loading from a checkpoint created this way, please replace the config.json file created with the config.json from the Hugging Face repos. We're working on fixing this issue.
+
+## Notice: Before loading from a checkpoint created this way, please replace the config.json file created with the config.json from the Hugging Face repos. We're working on fixing this issue.<br>
 
 To train from the huggingface checkpoints, use the checkpoint_training script and just replace MODEL_NAME with "segmind/small-sd" or "segmind/tiny-sd", like so:<br>
 ```python

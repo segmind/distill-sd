@@ -990,7 +990,7 @@ def main():
             num_blocks= 4 if model_type=="sd_small" else 3
             for i in range(num_blocks):
                 unet.down_blocks[i].register_forward_hook(getActivation(dicts,'d'+str(i),True))
-            if model_type=="sd_small"
+            if model_type=="sd_small":
                 unet.mid_block.register_forward_hook(getActivation(dicts,'m',False))
             for i in range(num_blocks):
                 unet.up_blocks[i].register_forward_hook(getActivation(dicts,'u'+str(i),False))

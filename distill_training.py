@@ -443,6 +443,15 @@ def parse_args():
         ),
     )
     parser.add_argument(
+        "--prepare_unet,
+        type=str,
+        default="None",
+        help=(
+            'If `True`, removes blocks in the U-net. Only set this to `True` when running for the first time, from a full-sized stable diffusion model'
+            ' '
+        ),
+    )
+    parser.add_argument(
         "--output_weight",
         type=float,
         default=1,
@@ -650,8 +659,8 @@ def main():
     )
 
     assert args.distill_level=="sd_small" or args.distill_level=="sd_tiny"
-
-    prepare_unet(unet, args.distill_level)
+    if args.prepare_unet=="True":
+        prepare_unet(unet, args.distill_level)
 
     # Freeze vae and text_encoder
     vae.requires_grad_(False)

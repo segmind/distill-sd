@@ -96,8 +96,10 @@ Training instructions for knowledge distillation are similar to those of the dif
 ```--distill_level```: One of "sd_small" or "sd_tiny", depending on which type of model is to be trained.<br>
 ```--output_weight```: A floating point number representing the amount the output-level KD loss is to be scaled by.<br>
 ```--feature-weight```: A floating point number representing the amount the feautre-level KD loss is to be scaled by.<br>
+```--prepare_unet```:Either "True" or "False"; denotes if the U-net has to prepared to a smaller size before distillation. Set to "True" if you are distilling afresh from a full-sized
+Stable Diffusion checkpoint. <br>
 Also, ```snr_gamma``` has been removed.
-We suggest using a standard Stable Diffusion model to distillation train, since the script has been configured for those architectures.
+We suggest using a standard Stable Diffusion model to distillation train, since the script has been configured for those architectures.<br>
 
 An example:<br>
 ```python
@@ -114,6 +116,7 @@ accelerate launch --mixed_precision="fp16"  distill_training.py \
   --gradient_checkpointing \
   --max_train_steps=15000 \
   --distill_level="sd_small"\
+  --prepare_unet="True"\
   --output_weight=0.5\
   --feature_weight=0.5\
   --learning_rate=1e-05 \
@@ -121,6 +124,8 @@ accelerate launch --mixed_precision="fp16"  distill_training.py \
   --lr_scheduler="constant" --lr_warmup_steps=0 \
   --output_dir="sd-laion-art"
 ```
+<br>
+(If you are resuming from a checkpoint, please do pass prepare_unet="False")
 
 ## Notice: Before loading from a checkpoint created this way, please replace the config.json file created with the config.json from the Hugging Face repos. We're working on fixing this issue.<br>
 

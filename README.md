@@ -109,7 +109,6 @@ export DATASET_NAME="fantasyfish/laion-art"
 accelerate launch --mixed_precision="fp16"  distill_training.py \
   --pretrained_model_name_or_path=$MODEL_NAME \
   --dataset_name=$DATASET_NAME \
-  --use_ema \
   --resolution=512 --center_crop --random_flip \
   --train_batch_size=1 \
   --gradient_accumulation_steps=4 \

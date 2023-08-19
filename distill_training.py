@@ -443,7 +443,7 @@ def parse_args():
         ),
     )
     parser.add_argument(
-        "--prepare_unet,
+        "--prepare_unet",
         type=str,
         default="None",
         help=(

@@ -616,6 +616,7 @@ def main():
         )
 
     def prepare_unet(unet, model_type):
+        unet=accelerator.unwrap_model(unet)
         assert model_type in ["sd_tiny", "sd_small"]
         # Set mid block to None if mode is other than base
         if model_type != "sd_small":

@@ -990,6 +990,7 @@ def main():
         return hook
         
     def cast_hook(unet,dicts,model_type,teacher=False):
+        unet=accelerator.unwrap_model(unet)
         if teacher:
             for i in range(4):
                 unet.down_blocks[i].register_forward_hook(getActivation(dicts,'d'+str(i),True))

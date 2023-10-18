@@ -217,11 +217,11 @@ Link to the model -> [Huggingface 🤗 repo](https://huggingface.co/segmind/tiny
 ## Limitations
 + The distilled models are in early phase and the outputs may not be at a production quality yet.
 + These models may not be the best general models. They are best used as fine-tuned or LoRA trained on specific concepts/styles.
-+ Distilled models are not very good at composibility or multiconcepts yet.
++ Distilled models are not very good at composability or multiconcepts yet.
 
 ## Research Roadmap
 - [ ] SDXL distilled models and code.
-- [ ] Further fine-tuned SD-1.5 base models for better composibility and generalization.
+- [ ] Further fine-tuned SD-1.5 base models for better composability and generalization.
 - [ ] Apply Flash Attention-2 for faster training/fine-tuning
 - [ ] Apply TensorRT and/or AITemplate for further accelerations.
 - [ ] Look at Quantization-Aware-Training(QAT) during distillation process.
